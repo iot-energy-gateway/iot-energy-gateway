@@ -1,0 +1,25 @@
+name: Daemon CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "daemon/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+  pull_request:
+    paths:
+      - "daemon/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo build --release -p energy-daemon
+      - run: cargo test --release -p energy-daemon
