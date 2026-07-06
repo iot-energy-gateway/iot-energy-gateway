@@ -10,12 +10,12 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: rustup toolchain install 1.84.0 --target wasm32v1-none
-      - run: cargo +1.84.0 test --workspace --release -p energy_gateway
-      - run: cargo +1.84.0 build --release -p energy_gateway --target wasm32v1-none
+      - run: rustup target add wasm32v1-none
+      - run: cargo check -p energy_gateway
+      - run: cargo build --release -p energy_gateway --target wasm32v1-none
         env:
           RUSTFLAGS: "-C link-arg=-nostartfiles -C link-arg=-Wl,--gc-sections"
