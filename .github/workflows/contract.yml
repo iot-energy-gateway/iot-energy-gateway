@@ -21,12 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: stellar/actions/soroban@v0
-        with:
-          version: "22"
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
-        with:
-          toolchain: "1.84.0"
-          target: wasm32v1-none
-      - run: cargo test --workspace --release
-      - run: cargo build --release -p energy_gateway --target wasm32v1-none
+      - run: rustup toolchain install 1.84.0 --target wasm32v1-none
+      - run: cargo +1.84.0 test --workspace --release -p energy_gateway
+      - run: cargo +1.84.0 build --release -p energy_gateway --target wasm32v1-none
+        env:
+          RUSTFLAGS: "-C link-arg=-nostartfiles -C link-arg=-Wl,--gc-sections"
