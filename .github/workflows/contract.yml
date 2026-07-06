@@ -18,4 +18,4 @@ jobs:
       - run: cargo check -p energy_gateway
       - run: cargo build --release -p energy_gateway --target wasm32v1-none
         env:
-          RUSTFLAGS: "-C link-arg=-nostartfiles -C link-arg=-Wl,--gc-sections"
+          RUSTFLAGS: "-C link-arg=--gc-sections"
